@@ -1,9 +1,9 @@
 import { IsString, Length } from 'class-validator';
-import { CreateUserInput } from './create-user.input';
+import { CreateNpcInput } from './create-npc.input';
 import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateUserInput extends PartialType(CreateUserInput) {
+export class UpdateNpcInput extends PartialType(CreateNpcInput) {
   @Field(() => Int)
   id: number;
 

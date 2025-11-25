@@ -3,9 +3,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppService } from './app.service';
-import { User } from './user/entities/user.entity';
-import { UserModule } from './user/user.module';
+import { Npc } from './model/npc/npc.entity';
+import { NpcModule } from './model/npc/npc.module';
 
 @Module({
   imports: [
@@ -26,11 +25,10 @@ import { UserModule } from './user/user.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User],
+      entities: [Npc],
       synchronize: true,
     }),
-    UserModule
+    NpcModule
   ],
-  providers: [AppService],
 })
 export class AppModule { }
