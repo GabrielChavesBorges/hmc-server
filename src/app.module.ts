@@ -5,6 +5,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Npc } from './model/npc/npc.entity';
 import { NpcModule } from './model/npc/npc.module';
+import { Item } from './model/item/item.entity';
+import { ItemModule } from './model/item/item.module';
 
 @Module({
   imports: [
@@ -25,9 +27,10 @@ import { NpcModule } from './model/npc/npc.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Npc],
+      entities: [Item, Npc],
       synchronize: true,
     }),
+    ItemModule,
     NpcModule
   ],
 })

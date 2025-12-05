@@ -1,9 +1,8 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { NpcService } from './npc.service';
-import { Npc } from './npc.entity';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateNpcInput } from './dto/create-npc.input';
 import { UpdateNpcInput } from './dto/update-npc.input';
-import { NotFoundException } from '@nestjs/common';
+import { Npc } from './npc.entity';
+import { NpcService } from './npc.service';
 
 @Resolver(() => Npc)
 export class NpcResolver {
