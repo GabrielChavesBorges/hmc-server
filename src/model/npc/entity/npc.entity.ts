@@ -21,6 +21,10 @@ export class Npc {
   })
   birth_season: Season;
 
+  @Field()
+  @Column({ default: 0 })
+  affection_points: number;
+
   @Field(() => [NpcItemPreference], { nullable: true })
   @OneToMany(() => NpcItemPreference, preference => preference.npc)
   itemPreferences: NpcItemPreference[];

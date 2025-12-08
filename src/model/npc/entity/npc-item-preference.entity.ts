@@ -20,5 +20,5 @@ export class NpcItemPreference {
 
   @Field()
   @Column({ type: 'int', default: 0 })
-  likingLevel: number;
+  likingLevel: number; // -8 to 8 range, this is how many affection points the npc will receive, depends on location (4 locations)
 }
