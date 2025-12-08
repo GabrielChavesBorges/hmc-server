@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Season } from 'src/common/season.enum';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { NpcItemPreference } from './npc-item-preference.entity';
 
 @ObjectType()
 @Entity()
@@ -19,4 +20,8 @@ export class Npc {
     enum: Season,
   })
   birth_season: Season;
+
+  @Field(() => [NpcItemPreference], { nullable: true })
+  @OneToMany(() => NpcItemPreference, preference => preference.npc)
+  itemPreferences: NpcItemPreference[];
 }

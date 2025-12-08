@@ -2,14 +2,18 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateNpcInput } from './dto/create-npc.input';
 import { UpdateNpcInput } from './dto/update-npc.input';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Npc } from './npc.entity';
+import { Npc } from './entity/npc.entity';
 import { Repository } from 'typeorm';
+import { NpcItemPreference } from './entity/npc-item-preference.entity';
 
 @Injectable()
 export class NpcService {
   constructor(
     @InjectRepository(Npc)
     private npcRepository: Repository<Npc>,
+
+    @InjectRepository(NpcItemPreference)
+    private itemPreferenceRepository: Repository<NpcItemPreference>,
   ) { }
 
   create(createNpcInput: CreateNpcInput): Promise<Npc> {
@@ -18,11 +22,16 @@ export class NpcService {
   }
 
   findAll(): Promise<Npc[]> {
-    return this.npcRepository.find();
+    return this.npcRepository.find({
+      relations: ['itemPreferences', 'itemPreferences.item'],
+    });
   }
 
   async findOne(id: number) {
-    const npc = await this.npcRepository.findOneBy({ id });
+    const npc = await this.npcRepository.findOne({
+      where: { id },
+      relations: ['itemPreferences', 'itemPreferences.item'],
+    });
     if (!npc) {
       throw new NotFoundException(`Npc ${id} not found.`);
     }
@@ -42,5 +51,19 @@ export class NpcService {
     }
     await this.npcRepository.remove(npcToDelete);
     return true;
+  }
+
+  async addItemPreference(npcId: number, itemId: number, likingLevel: number) {
+      const newItemPreference = this.itemPreferenceRepository.create({
+      npc: { id: npcId },
+      item: { id: itemId },
+      likingLevel,
+    });
+
+    const { id: newId } = await this.itemPreferenceRepository.save(newItemPreference);
+    return await this.itemPreferenceRepository.findOne ({
+      where: { id: newId },
+      relations: ['npc', 'item'],
+    });
   }
 }

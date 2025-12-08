@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { NpcItemPreference } from '../npc/entity/npc-item-preference.entity';
 
 @ObjectType()
 @Entity()
@@ -15,4 +16,8 @@ export class Item {
   @Field()
   @Column()
   is_edible: boolean;
+
+  @Field(() => [NpcItemPreference], { nullable: true })
+  @OneToMany(() => NpcItemPreference, preference => preference.item)
+  npcPreferences: NpcItemPreference[];
 }
