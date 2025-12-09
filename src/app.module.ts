@@ -7,7 +7,7 @@ import { Npc } from './model/npc/entity/npc.entity';
 import { NpcModule } from './model/npc/npc.module';
 import { Item } from './model/item/item.entity';
 import { ItemModule } from './model/item/item.module';
-import { NpcItemPreference } from './model/npc/entity/npc-item-preference.entity';
+import { Gift } from './model/npc/entity/gift.entity';
 
 @Module({
   imports: [
@@ -28,7 +28,7 @@ import { NpcItemPreference } from './model/npc/entity/npc-item-preference.entity
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Item, Npc, NpcItemPreference],
+      entities: [Gift, Item, Npc],
       synchronize: true,
     }),
     ItemModule,

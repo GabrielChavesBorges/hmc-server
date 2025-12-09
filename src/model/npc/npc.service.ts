@@ -4,7 +4,8 @@ import { UpdateNpcInput } from './dto/update-npc.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Npc } from './entity/npc.entity';
 import { Repository } from 'typeorm';
-import { NpcItemPreference } from './entity/npc-item-preference.entity';
+import { CreateGiftInput } from './dto/create-gift.input';
+import { Gift } from './entity/gift.entity';
 
 @Injectable()
 export class NpcService {
@@ -12,8 +13,8 @@ export class NpcService {
     @InjectRepository(Npc)
     private npcRepository: Repository<Npc>,
 
-    @InjectRepository(NpcItemPreference)
-    private itemPreferenceRepository: Repository<NpcItemPreference>,
+    @InjectRepository(Gift)
+    private itemPreferenceRepository: Repository<Gift>,
   ) { }
 
   create(createNpcInput: CreateNpcInput): Promise<Npc> {
@@ -23,14 +24,14 @@ export class NpcService {
 
   findAll(): Promise<Npc[]> {
     return this.npcRepository.find({
-      relations: ['itemPreferences', 'itemPreferences.item'],
+      relations: ['gifts', 'gifts.item_given'],
     });
   }
 
   async findOne(id: number) {
     const npc = await this.npcRepository.findOne({
       where: { id },
-      relations: ['itemPreferences', 'itemPreferences.item'],
+      relations: ['gifts', 'gifts.item_given'],
     });
     if (!npc) {
       throw new NotFoundException(`Npc ${id} not found.`);
@@ -53,17 +54,19 @@ export class NpcService {
     return true;
   }
 
-  async addItemPreference(npcId: number, itemId: number, likingLevel: number) {
-      const newItemPreference = this.itemPreferenceRepository.create({
-      npc: { id: npcId },
-      item: { id: itemId },
-      likingLevel,
+  async createGift(createGiftInput: CreateGiftInput) {
+    const newGift = this.itemPreferenceRepository.create({
+      receiving_npc: { id: createGiftInput.receiving_npc_id },
+      item_given: { id: createGiftInput.item_given_id },
+      is_npc_married: createGiftInput.is_npc_married,
+      location: createGiftInput.location,
+      affection_points: createGiftInput.affection_points
     });
 
-    const { id: newId } = await this.itemPreferenceRepository.save(newItemPreference);
+    const { id: newId } = await this.itemPreferenceRepository.save(newGift);
     return await this.itemPreferenceRepository.findOne ({
       where: { id: newId },
-      relations: ['npc', 'item'],
+      relations: ['receiving_npc', 'item_given'],
     });
   }
 }

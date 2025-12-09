@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ItemService } from './item.service';
-import { ItemResolver } from './item.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Gift } from '../npc/entity/gift.entity';
 import { Item } from './item.entity';
-import { Npc } from '../npc/entity/npc.entity';
-import { NpcItemPreference } from '../npc/entity/npc-item-preference.entity';
+import { ItemResolver } from './item.resolver';
+import { ItemService } from './item.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Item, NpcItemPreference])],
+  imports: [TypeOrmModule.forFeature([Item, Gift])],
   providers: [ItemResolver, ItemService],
 })
 export class ItemModule { }

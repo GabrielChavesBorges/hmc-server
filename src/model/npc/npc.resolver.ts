@@ -3,7 +3,8 @@ import { CreateNpcInput } from './dto/create-npc.input';
 import { UpdateNpcInput } from './dto/update-npc.input';
 import { Npc } from './entity/npc.entity';
 import { NpcService } from './npc.service';
-import { NpcItemPreference } from './entity/npc-item-preference.entity';
+import { Gift } from './entity/gift.entity';
+import { CreateGiftInput } from './dto/create-gift.input';
 
 @Resolver(() => Npc)
 export class NpcResolver {
@@ -34,12 +35,9 @@ export class NpcResolver {
     return this.npcService.remove(id);
   }
 
-  @Mutation(() => NpcItemPreference)
-  async addItemPreference(
-    @Args('npcId') npcId: number,
-    @Args('itemId') itemId: number,
-    @Args('likingLevel') likingLevel: number
-  ) {
-    return this.npcService.addItemPreference(npcId, itemId, likingLevel);
+  @Mutation(() => Gift)
+  async createGift(
+    @Args('createGiftInput') createGiftInput: CreateGiftInput) {
+    return this.npcService.createGift(createGiftInput);
   }
 }

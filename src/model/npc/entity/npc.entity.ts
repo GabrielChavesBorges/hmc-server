@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Season } from 'src/common/season.enum';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { NpcItemPreference } from './npc-item-preference.entity';
+import { Gift } from './gift.entity';
 
 @ObjectType()
 @Entity()
@@ -25,7 +25,7 @@ export class Npc {
   @Column({ default: 0 })
   affection_points: number;
 
-  @Field(() => [NpcItemPreference], { nullable: true })
-  @OneToMany(() => NpcItemPreference, preference => preference.npc)
-  itemPreferences: NpcItemPreference[];
+  @Field(() => [Gift], { nullable: true })
+  @OneToMany(() => Gift, gift => gift.receiving_npc)
+  gifts: Gift[];
 }
