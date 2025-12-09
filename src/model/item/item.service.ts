@@ -29,13 +29,12 @@ export class ItemService {
     return item;
   }
 
-  async update(updateItemInput: UpdateItemInput) {
-    const { id, ...changes } = updateItemInput;
+  async update(id: number, changes: UpdateItemInput) {
     await this.itemRepository.update(id, changes);
     return this.itemRepository.findOneBy({ id });
   }
 
-  async remove(id: number) {
+  async delete(id: number) {
     const itemToDelete = await this.itemRepository.findOneBy({ id });
     if (!itemToDelete) {
       throw new NotFoundException(`Item ${id} not found.`);

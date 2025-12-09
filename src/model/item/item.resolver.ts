@@ -24,12 +24,14 @@ export class ItemResolver {
   }
 
   @Mutation(() => Item)
-  updateItem(@Args('updateItemInput') updateItemInput: UpdateItemInput) {
-    return this.itemService.update(updateItemInput);
+  updateItem(
+    @Args('id') id: number,
+    @Args('updateItemInput') updateItemInput: UpdateItemInput) {
+    return this.itemService.update(id, updateItemInput);
   }
 
   @Mutation(() => Boolean)
-  removeItem(@Args('id', { type: () => Int }) id: number) {
-    return this.itemService.remove(id);
+  deleteItem(@Args('id', { type: () => Int }) id: number) {
+    return this.itemService.delete(id);
   }
 }
