@@ -15,9 +15,9 @@ export class Item {
 
   @Field()
   @Column()
-  is_edible: boolean;
+  isEdible: boolean;
 
   @Field(() => [Gift], { nullable: true })
-  @OneToMany(() => Gift, gift => gift.item_given)
+  @OneToMany(() => Gift, gift => gift.itemGiven)
   gifts: Gift[];
 }

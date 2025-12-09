@@ -1,4 +1,4 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { IsEnum, IsString, Length } from 'class-validator';
 import { Season } from 'src/common/season.enum';
 
@@ -11,5 +11,5 @@ export class CreateNpcInput {
 
   @Field(() => Season)
   @IsEnum(Season)
-  birth_season: Season;
+  birthSeason: Season;
 }

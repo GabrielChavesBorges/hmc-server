@@ -24,14 +24,14 @@ export class NpcService {
 
   findAll(): Promise<Npc[]> {
     return this.npcRepository.find({
-      relations: ['gifts', 'gifts.item_given'],
+      relations: ['gifts', 'gifts.itemGiven'],
     });
   }
 
   async findOne(id: number) {
     const npc = await this.npcRepository.findOne({
       where: { id },
-      relations: ['gifts', 'gifts.item_given'],
+      relations: ['gifts', 'gifts.itemGiven'],
     });
     if (!npc) {
       throw new NotFoundException(`Npc ${id} not found.`);
@@ -56,17 +56,17 @@ export class NpcService {
 
   async createGift(createGiftInput: CreateGiftInput) {
     const newGift = this.itemPreferenceRepository.create({
-      receiving_npc: { id: createGiftInput.receiving_npc_id },
-      item_given: { id: createGiftInput.item_given_id },
-      is_npc_married: createGiftInput.is_npc_married,
+      receivingNpc: { id: createGiftInput.receivingNpcId },
+      itemGiven: { id: createGiftInput.itemGivenId },
+      isNpcMarried: createGiftInput.isNpcMarried,
       location: createGiftInput.location,
-      affection_points: createGiftInput.affection_points
+      affectionPoints: createGiftInput.affectionPoints
     });
 
     const { id: newId } = await this.itemPreferenceRepository.save(newGift);
     return await this.itemPreferenceRepository.findOne ({
       where: { id: newId },
-      relations: ['receiving_npc', 'item_given'],
+      relations: ['receivingNpc', 'itemGiven'],
     });
   }
 }

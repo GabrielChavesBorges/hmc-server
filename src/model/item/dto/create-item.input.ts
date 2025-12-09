@@ -10,5 +10,5 @@ export class CreateItemInput {
 
   @Field()
   @IsBoolean()
-  is_edible: boolean;
+  isEdible: boolean;
 }

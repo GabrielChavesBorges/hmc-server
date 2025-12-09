@@ -19,13 +19,13 @@ export class Npc {
     type: 'enum',
     enum: Season,
   })
-  birth_season: Season;
+  birthSeason: Season;
 
   @Field()
   @Column({ default: 0 })
-  affection_points: number;
+  affectionPoints: number;
 
   @Field(() => [Gift], { nullable: true })
-  @OneToMany(() => Gift, gift => gift.receiving_npc)
+  @OneToMany(() => Gift, gift => gift.receivingNpc)
   gifts: Gift[];
 }

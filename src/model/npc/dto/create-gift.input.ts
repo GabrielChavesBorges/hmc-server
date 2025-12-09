@@ -6,15 +6,15 @@ import { Location } from 'src/common/location.enum';
 export class CreateGiftInput {
   @Field()
   @IsInt()
-  receiving_npc_id: number;
+  receivingNpcId: number;
 
   @Field()
   @IsInt()
-  item_given_id: number;
+  itemGivenId: number;
 
   @Field()
   @IsBoolean()
-  is_npc_married: boolean;
+  isNpcMarried: boolean;
 
   @Field(() => Location)
   @IsEnum(Location)
@@ -24,5 +24,5 @@ export class CreateGiftInput {
   @IsInt()
   @Min(-8)
   @Max(8)
-  affection_points: number;
+  affectionPoints: number;
 }

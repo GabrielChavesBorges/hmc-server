@@ -8,6 +8,7 @@ import { NpcModule } from './model/npc/npc.module';
 import { Item } from './model/item/item.entity';
 import { ItemModule } from './model/item/item.module';
 import { Gift } from './model/npc/entity/gift.entity';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { Gift } from './model/npc/entity/gift.entity';
       database: process.env.DB_NAME,
       entities: [Gift, Item, Npc],
       synchronize: true,
+      namingStrategy: new SnakeNamingStrategy()
     }),
     ItemModule,
     NpcModule

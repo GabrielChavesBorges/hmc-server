@@ -13,15 +13,15 @@ export class Gift {
 
   @Field(() => Npc)
   @ManyToOne(() => Npc, npc => npc.gifts, { onDelete: 'CASCADE' })
-  receiving_npc: Npc;
+  receivingNpc: Npc;
 
   @Field(() => Item)
   @ManyToOne(() => Item, item => item.gifts, { onDelete: 'CASCADE'})
-  item_given: Item;
+  itemGiven: Item;
 
   @Field()
   @Column()
-  is_npc_married: boolean;
+  isNpcMarried: boolean;
 
   @Field(() => Location)
   @Column()
@@ -29,5 +29,5 @@ export class Gift {
 
   @Field()
   @Column()
-  affection_points: number;
+  affectionPoints: number;
 }
