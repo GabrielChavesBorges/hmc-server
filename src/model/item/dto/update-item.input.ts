@@ -1,4 +1,4 @@
-import { Field, InputType, Int, PartialType } from '@nestjs/graphql';
+import { InputType, PartialType } from '@nestjs/graphql';
 import { CreateItemInput } from './create-item.input';
 
 @InputType()
